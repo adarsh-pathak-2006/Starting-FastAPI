@@ -3,7 +3,7 @@ from fastapi import FastAPI
 app=FastAPI()
 
 
-@app.get("/calculate/{a}/{symbol}/{b}")
+@app.get("/calculate")
 def calculator(a:int, b:int, symbol:str):
     if symbol=="add":
         return {'answer':a+b}
@@ -15,3 +15,8 @@ def calculator(a:int, b:int, symbol:str):
         return {'message':a/b}
     else:
         return {'message':'enter operation'}
+
+
+@app.get("/search")
+def search(query:str):
+    return { 'Query':query }
