@@ -20,3 +20,7 @@ def calculator(a:int, b:int, symbol:str):
 @app.get("/search")
 def search(query:str):
     return { 'Query':query }
+
+@app.get("/square")
+def square(number:int):
+    return {'answer':number**2}
