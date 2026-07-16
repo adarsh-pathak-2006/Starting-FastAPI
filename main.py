@@ -14,4 +14,4 @@ def calculator(a:int, b:int, symbol:str):
     elif symbol=="divide":
         return {'message':a/b}
     else:
-        return {'message':'enter +, -, *, /'}
+        return {'message':'enter operation'}
