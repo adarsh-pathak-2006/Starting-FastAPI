@@ -1,18 +1,19 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 
 app=FastAPI()
 
 class Student(BaseModel):
+    id:int
     name:str
     course:str
 
 student_db=[]
 
 @app.get("/student")
-def student(student:Student):
-    for student in student_db:
-        return student
+def student():
+    student=student_db
+    return student
 
 @app.post("/student")
 def student_create(student:Student):
@@ -20,16 +21,26 @@ def student_create(student:Student):
     return student
 
 @app.get("/student/{id}")
-def student_retrieve(student:Student, id:int):
-    student=student_db[id]
-    return student
+def student_retrieve(id:int):
+    for student in student_db:
+        if student.id==id:
+            return student
+    else:
+        raise HTTPException(status_code=404, detail="student not found")
 
-@app.post("/student/{id}", response_model=Student)
+@app.put("/student/{id}", response_model=Student)
 def student_update(student:Student, id:int):
-    student=student_db[id]
-    return student
+    for student in student_db:
+        if student.id==id:
+            return student
+    else:
+        raise HTTPException(status_code=404, detail="student not found with that id")
 
 @app.delete("/student/{id}")
 def student_delete(id:int):
-    student_db.remove(id)
-    return { 'delete':'student data deleted' }
+    for student in student_db:
+        if student.id==id:
+            student_db.remove(student)
+            return { "message":"success" }
+    else:
+        raise HTTPException(status_code=404, detail="student not found")
