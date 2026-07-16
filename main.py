@@ -6,7 +6,7 @@ app=FastAPI()
 def home():
     return { 'message':'home' }
 
-@app.get("/about/")
+@app.get("/about")
 def about():
     return { 'message':'about' }
 
